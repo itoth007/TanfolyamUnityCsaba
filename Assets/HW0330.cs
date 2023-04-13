@@ -101,7 +101,7 @@ public class HW0330 : MonoBehaviour
         {
             for (int j = 1; j <= szorzo2; j++)
             {
-                Debug.Log(i + " * " + j + " = " + i * j);
+                Debug.Log(j + " * " + i + " = " + i * j);
             }
         }
     }
