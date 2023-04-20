@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
+    [SerializeField] float angularSpeed = 180;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +25,20 @@ public class Player : MonoBehaviour
     void Update()
     {
         Vector3 direction = GetInputDirection();
-        Vector3 velocity = direction * speed;
-        transform.position += velocity * Time.deltaTime;
+        if (direction != Vector3.zero)
+        {
+            Vector3 velocity = direction * speed;
+            transform.position += velocity * Time.deltaTime;
+            Quaternion targetRot = Quaternion.LookRotation(direction);
+            Quaternion currentRot = transform.rotation;
+            float step = angularSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(currentRot, targetRot, step);    
+  //          transform.rotation = Quaternion.LookRotation(direction);
+        }
     }
     Vector3 GetInputDirection()
     {
-        bool upButton = Input.GetKey(KeyCode.UpArrow);
+        bool upButton = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.A);
         bool downButton = Input.GetKey(KeyCode.DownArrow);
         bool rightButton = Input.GetKey(KeyCode.RightArrow);
         bool leftButton = Input.GetKey(KeyCode.LeftArrow);
