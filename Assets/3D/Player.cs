@@ -9,16 +9,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Transform t = transform; // bonyolult                         ctrl kc ctrl ku komment be és ki
-        //Vector3 p = t.position;
-        //Debug.Log(p);
-        //t.position = new Vector3(2, 3, 4);
-        //transform.position= new Vector3(2, 3, 4); // egyszerûbb
-        //Debug.Log("Magasság" + transform.position.y);
-        //// transform.position.x = 3f; ez nem mûködik
-        //Vector3 pos = transform.position; // ez mûködik
-        //pos.y = 3;
-        //transform.position= pos;
     }
 
     // Update is called once per frame
@@ -29,11 +19,10 @@ public class Player : MonoBehaviour
         {
             Vector3 velocity = direction * speed;
             transform.position += velocity * Time.deltaTime;
-            Quaternion targetRot = Quaternion.LookRotation(direction);
-            Quaternion currentRot = transform.rotation;
+            Quaternion targetAngle = Quaternion.LookRotation(direction);
+            Quaternion currentAngle = transform.rotation;
             float step = angularSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.RotateTowards(currentRot, targetRot, step);    
-  //          transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(currentAngle, targetAngle, step);    
         }
     }
     Vector3 GetInputDirection()

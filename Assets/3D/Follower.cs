@@ -22,12 +22,8 @@ public class Follower : MonoBehaviour
         Vector3 dir = targetPoint - selfPoint;
         if (dir != Vector3.zero)
         {
-            //Vector3 dir = targetPoint - selfPoint; ////////// Ehelyett csináltuk alább
-            //dir.Normalize();
-            //Vector3 velocity = dir * speed;
-            //transform.position += velocity * Time.deltaTime;
-       //     transform.position = Vector3.MoveTowards(selfPoint, targetPoint, speed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(dir); // Default a 2. paraméter Vector3.Up - Enemy befordul a player felé
+            transform.rotation = Quaternion.LookRotation(dir); // nem kell normalizálni
+            transform.position = Vector3.MoveTowards(selfPoint, targetPoint, speed * Time.deltaTime);
         }
     }
 }
