@@ -6,8 +6,8 @@ public class Camera_follower : MonoBehaviour
 {
     [SerializeField] float speed = 5; //speed = player's speed
     [SerializeField] Transform target; // Drag and drop, whom follows
-    [SerializeField] float distance = 5;
-    [SerializeField] float cameraOffsetY = 3;
+    [SerializeField] float distance = 5; //magnitude
+    [SerializeField] float cameraOffsetY = 3; // higher, than player
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +25,7 @@ public class Camera_follower : MonoBehaviour
             if (dir.magnitude > distance)
             {
                 transform.rotation = Quaternion.LookRotation(dir); // nem kell normalizálni
-                transform.position = Vector3.MoveTowards(selfPoint, targetPoint+new Vector3(0, cameraOffsetY, 0), speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(selfPoint, targetPoint + new Vector3(0, cameraOffsetY, 0), speed * Time.deltaTime);
             }
         }
     }
