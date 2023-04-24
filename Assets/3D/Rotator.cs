@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 public class Rotator : MonoBehaviour
 {
     [SerializeField] float angularSpeed;
-    [SerializeField] Space space;
+    [SerializeField] Space space; //Word oe Self
     [SerializeField] Vector3 axis = Vector3.up;
     // Start is called before the first frame update
 

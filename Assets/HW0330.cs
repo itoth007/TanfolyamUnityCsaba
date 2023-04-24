@@ -26,10 +26,10 @@ public class HW0330 : MonoBehaviour
     void Update()
     {
     }
-    private void OnValidate()
-    {
-        Debug.Log($"{divideWhat}-ban/ben a {divisor} megvan {divideWhat / divisor} és a maradék {divideWhat % divisor}");
-    }
+    //private void OnValidate()
+    //{
+    //    Debug.Log($"{divideWhat}-ban/ben a {divisor} megvan {divideWhat / divisor} és a maradék {divideWhat % divisor}");
+    //}
     private void szamitogepSzerepe()
     {
         int a = 2, b = 4, c = 5;

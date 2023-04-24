@@ -5,9 +5,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Lookat : MonoBehaviour
 {
-    [SerializeField] Transform target;
-    [SerializeField] Vector3 targetOffset;
-    [SerializeField] bool enableVertical = true;
+    [SerializeField] Transform target; // head of player - drag and drop
+    [SerializeField] Vector3 targetOffset; // look offset
+    [SerializeField] bool enableVertical = true; //2D or 3D
 
     // Start is called before the first frame update
     // Update is called once per frame
@@ -19,8 +19,6 @@ public class Lookat : MonoBehaviour
         if (!enableVertical)
             dir.y = 0;
         if (dir != Vector3.zero)
-        {
             transform.rotation = Quaternion.LookRotation(dir); // nem kell normalizálni
-        }
     }
 }
