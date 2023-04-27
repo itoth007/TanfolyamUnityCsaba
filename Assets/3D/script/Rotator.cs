@@ -17,10 +17,13 @@ public class Rotator : MonoBehaviour
     }
     void OnDrawGizmos()
     {
-        Vector3 center = transform.position;
+        if(space==Space.Self)
+            Gizmos.matrix = transform.localToWorldMatrix; // saját lokális tér
+        Vector3 center =  space == Space.Self ? Vector3.zero : transform.position;
         Vector3 a = center + axis.normalized;
         Vector3 b = center - axis.normalized;   
         Gizmos.color = Color.yellow;    
         Gizmos.DrawLine(a, b);
+        Gizmos.matrix = Matrix4x4.identity; // visszaállítja a teret (elsõ sor párja)
     }
 }

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 1f;
     [SerializeField] float angularSpeed = 180; //If the player rotate,
                                                //not suddenly, but continously
+    [SerializeField] Transform cameraTransform; 
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +46,13 @@ public class Player : MonoBehaviour
             z += 1;
         if (downButton)
             z -= 1;
-        Vector3 dir = new Vector3(x, 0, z);
+
+        Vector3 cameraRight = cameraTransform.right; // nem kell normalizálni nincs cameraTransform.left  ez a inus right
+        Vector3 cameraForward = cameraTransform.forward;
+
+        //Vector3 dir = new Vector3(x, 0, z); // Globális térben
+        Vector3 dir = x * cameraRight + z * cameraForward;
+        dir.y = 0;
         dir.Normalize(); // That needs if I press Up and left together dont be quicker
         return dir;
     }
