@@ -52,7 +52,15 @@ public class Player : MonoBehaviour
 
         //Vector3 dir = new Vector3(x, 0, z); // Globális térben
         Vector3 dir = x * cameraRight + z * cameraForward;
-        dir.y = 0;
+
+        //dir.y = 0;
+
+
+        //Vector3 dir;
+        //if (cameraForward.z >= 0)
+        //    dir = new Vector3(x * Mathf.Abs(cameraRight.x), 0, z * Mathf.Abs(cameraForward.z));
+        //else
+        //    dir = new Vector3(-x * Mathf.Abs(cameraRight.x), 0, z * Mathf.Abs(cameraForward.z));
         dir.Normalize(); // That needs if I press Up and left together dont be quicker
         return dir;
     }

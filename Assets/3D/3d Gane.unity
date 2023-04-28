@@ -540,7 +540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   angularSpeed: 180
-  cameraTransform: {fileID: 0}
+  cameraTransform: {fileID: 744380027}
 --- !u!4 &194782266
 Transform:
   m_ObjectHideFlags: 0
