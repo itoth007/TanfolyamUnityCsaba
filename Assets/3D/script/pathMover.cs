@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class pathMover : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class pathMover : MonoBehaviour
     Vector3 nextTarget;
     void OnValidate()
     {
-        movable.position = Vector3.Lerp(t1.position, t2.position, startPoint);
+      //  movable.position = Vector3.Lerp(t1.position, t2.position, startPoint); // ez nem lesz Build-ben
     }
 
     void Start()
@@ -21,13 +22,9 @@ public class pathMover : MonoBehaviour
         Vector3 p1 = t1.position;
         Vector3 p2 = t2.position;
 
-        // Vector3 p = startPoint * p2 + (1 - startPoint) * p1;
-
-        Vector3 p = Vector3.Lerp(p1, p2, startPoint);
-
+        movable.position = Vector3.Lerp(p1, p2, startPoint);
 
         nextTarget = t2.position;
-        movable.position = p;
     }
 
     void Update()
@@ -36,14 +33,7 @@ public class pathMover : MonoBehaviour
             Vector3.MoveTowards(movable.position, nextTarget, speed * Time.deltaTime);
 
         if (movable.position == nextTarget)
-        {
-            //if(nextTarget == point1)
-            //    nextTarget = point2;
-            //else
-            //    nextTarget = point1;
-
             nextTarget = nextTarget == t1.position ? t2.position : t1.position;
-        }
     }
 
     void OnDrawGizmos()

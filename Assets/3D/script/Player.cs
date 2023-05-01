@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         //Vector3 dir = new Vector3(x, 0, z); // Globális térben
         Vector3 dir = x * cameraRight + z * cameraForward;
 
-        //dir.y = 0;
+        dir.y = 0;
 
 
         //Vector3 dir;
