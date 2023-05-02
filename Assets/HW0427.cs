@@ -10,6 +10,10 @@ public class HW0427 : MonoBehaviour
     [SerializeField] int[] tomb;
     [SerializeField] int fibo;
     [SerializeField] string szoveg;
+    [SerializeField] Vector2 vectorA;
+    [SerializeField] Vector2 vectorB;
+    [SerializeField] float nrOfJump;
+    [SerializeField] Vector2 oneJump;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +21,14 @@ public class HW0427 : MonoBehaviour
         Debug.Log($"Fordított tömb: {ForditottTomb(tomb)[0]}{ForditottTomb(tomb)[1]}{ForditottTomb(tomb)[2]}{ForditottTomb(tomb)[3]}");
         Fibo(fibo);
         Debug.Log($"Karakterszámláló: {Karszaml(szoveg)}");
+    }
+    private void OnValidate()
+    {
+        float vectorLength = (vectorA - vectorB).magnitude;
+        nrOfJump = Mathf.Ceil(Mathf.Abs(vectorLength));
+        oneJump = (vectorA - vectorB); 
+        oneJump.Normalize();
+        oneJump*= vectorLength / nrOfJump;
     }
 
     // Update is called once per frame

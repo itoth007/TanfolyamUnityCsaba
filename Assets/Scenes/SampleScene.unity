@@ -793,6 +793,10 @@ MonoBehaviour:
   tomb: 01000000020000000300000004000000
   fibo: 9
   szoveg: Abrakadabra
+  vectorA: {x: 0, y: 0}
+  vectorB: {x: 10, y: 10}
+  nrOfJump: 15
+  oneJump: {x: -0.6666667, y: -0.6666667}
 --- !u!1 &1204600861
 GameObject:
   m_ObjectHideFlags: 0
