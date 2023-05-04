@@ -7,15 +7,23 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 1f;
     [SerializeField] float angularSpeed = 180; //If the player rotate,
                                                //not suddenly, but continously
-    [SerializeField] Transform cameraTransform; 
+    [SerializeField] Transform cameraTransform;
+    [SerializeField] Demageble demageble;
     // Start is called before the first frame update
     void Start()
     {
+    }
+    private void OnValidate()
+    {
+        if (demageble == null)
+            demageble = GetComponent<Demageble>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (demageble != null && !demageble.IsAlive)
+            return;
         Vector3 direction = GetPlayerDirection(); // 4 arrowkeys
         if (direction != Vector3.zero)
         {
@@ -24,10 +32,10 @@ public class Player : MonoBehaviour
             // After rotation the player target direction
             Quaternion targetAngle = Quaternion.LookRotation(direction);
             // current rotation state
-            Quaternion currentAngle = transform.rotation; 
+            Quaternion currentAngle = transform.rotation;
             float step = angularSpeed * Time.deltaTime;
             // that will set that the player rotates continously
-            transform.rotation = Quaternion.RotateTowards(currentAngle, targetAngle, step); 
+            transform.rotation = Quaternion.RotateTowards(currentAngle, targetAngle, step);
         }
     }
     Vector3 GetPlayerDirection()
