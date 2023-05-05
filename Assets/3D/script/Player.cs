@@ -5,24 +5,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
-    [SerializeField] float angularSpeed = 180; //If the player rotate,
-                                               //not suddenly, but continously
-    [SerializeField] Transform cameraTransform;
-    [SerializeField] Demageble demageble;
+    [SerializeField] float angularSpeed = 90;
+    [SerializeField] Transform cameraTransform; // 
+    [SerializeField] Damageable damageable;
     // Start is called before the first frame update
     void Start()
     {
     }
     private void OnValidate()
     {
-        if (demageble == null)
-            demageble = GetComponent<Demageble>();
+        if (damageable == null)
+            damageable = GetComponent<Damageable>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (demageble != null && !demageble.IsAlive)
+        if (damageable != null && !damageable.IsAlive)
             return;
         Vector3 direction = GetPlayerDirection(); // 4 arrowkeys
         if (direction != Vector3.zero)
@@ -46,30 +45,23 @@ public class Player : MonoBehaviour
         bool leftButton = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
         float x = 0;
         if (rightButton)
-            x += 1;
+            x += 0.1f; // 0.1 ->Turn in small circle
         if (leftButton)
-            x -= 1;
+            x -= 0.1f; // 0.1 ->Turn in small circle
         float z = 0;
         if (upButton)
             z += 1;
         if (downButton)
-            z -= 1;
+            z -= 0.1f; // 0.1 ->Turn in small circle
 
-        Vector3 cameraRight = cameraTransform.right; // nem kell normalizálni nincs cameraTransform.left  ez a inus right
+        Vector3 cameraRight = cameraTransform.right; // Transform.left is minus right
         Vector3 cameraForward = cameraTransform.forward;
-
-        //Vector3 dir = new Vector3(x, 0, z); // Globális térben
         Vector3 dir = x * cameraRight + z * cameraForward;
 
+        //Vector3 dir = new Vector3(x, 0, z); // Globális térben
+        //dir.Normalize(); // That needs if I press Up and left together dont be quicker
+
         dir.y = 0;
-
-
-        //Vector3 dir;
-        //if (cameraForward.z >= 0)
-        //    dir = new Vector3(x * Mathf.Abs(cameraRight.x), 0, z * Mathf.Abs(cameraForward.z));
-        //else
-        //    dir = new Vector3(-x * Mathf.Abs(cameraRight.x), 0, z * Mathf.Abs(cameraForward.z));
-        dir.Normalize(); // That needs if I press Up and left together dont be quicker
         return dir;
     }
 }

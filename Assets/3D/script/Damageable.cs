@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Demageble : MonoBehaviour
+public class Damageable : MonoBehaviour
 {
     [SerializeField]  int maxHP = 10;
     [SerializeField] TMP_Text healtText;
