@@ -6,12 +6,12 @@ public class Damager : MonoBehaviour
 {
     [SerializeField] int damage = 1;
 // ütközés  leaglább egyiken legyen rigidbody is legyen is Trigger
-//Kinematic egyszerûbb, nincs erõs
+//Kinematic egyszerûbb, nincs erõ
     private void OnTriggerEnter(Collider other)
     { //Damageable genetic parameter (típus)
-  //      Damageaable damageable = other.gameObject.GetComponent<Damageable>();
-        Damageable damageable = other.GetComponent<Damageable>();
-        if(damageable != null)
+        Damageable damageable = other.GetComponent<Damageable>();   //ua: Damageaable damageable = other.gameObject.GetComponent<Damageable>();
+
+        if (damageable != null)
         {
             //     Debug.Log(other.name);
             damageable.Damage(damage);
