@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        Debug.Log("Restart");
+        //Debug.Log("Restart");
+        SceneManager.LoadScene("3d Gane");
+       
     }
 }

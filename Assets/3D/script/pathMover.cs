@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,13 +10,8 @@ public class pathMover : MonoBehaviour
     [SerializeField] Color c1, c2 = Color.white;
     [SerializeField] Transform movable;
     [SerializeField] float speed = 2;
-    [SerializeField, Range(0, 1)] float startPoint = 0.5f;
-
-    Vector3 nextTarget;
-    void OnValidate()
-    {
-      //  movable.position = Vector3.Lerp(t1.position, t2.position, startPoint); // ez nem lesz Build-ben
-    }
+    [SerializeField, Range(0, 1)] float startPoint = 0.5f; 
+    Vector3 nextTarget; 
 
     void Start()
     {
