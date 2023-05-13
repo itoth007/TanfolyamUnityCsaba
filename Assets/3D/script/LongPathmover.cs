@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LongPathmover : MonoBehaviour
 {
-    [SerializeField] Vector3[] points;
+    [SerializeField] Vector3[] points; // way of GameObject
     [SerializeField] float speed = 2;
     [SerializeField] LineRenderer lineRenderer;
 
@@ -13,7 +13,7 @@ public class LongPathmover : MonoBehaviour
         if (lineRenderer == null)
             lineRenderer = GetComponent<LineRenderer>();
 
-        UpdateLineRenderer();
+        UpdateLineRenderer(); // Before Start draw the way
     }
 
 
@@ -21,24 +21,24 @@ public class LongPathmover : MonoBehaviour
 
     private void Start()
     {
-        transform.position = points[0];
+        transform.position = points[0]; // Start point of Gameobject
         targetIndex = 1;
     }
 
     void Update()
     {
-        Vector3 target = points[targetIndex];
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        Vector3 target = points[targetIndex]; // next point is the target
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime); // Lets go to the next point
 
-        if (transform.position == target)
+        if (transform.position == target) // reached next point
         {
-            targetIndex++;
+            targetIndex++; // lets see the next point index
 
-            if (targetIndex >= points.Length)
+            if (targetIndex >= points.Length) // but if Object reached the last one, go to the first
                 targetIndex = 0;
         }
 
-        UpdateLineRenderer();
+        UpdateLineRenderer(); // Draw
     }
 
     void UpdateLineRenderer()
@@ -46,7 +46,7 @@ public class LongPathmover : MonoBehaviour
         if (lineRenderer == null)
             return;
 
-        lineRenderer.positionCount = points.Length;
+        lineRenderer.positionCount = points.Length; // simple draw
         lineRenderer.SetPositions(points);
     }
 
