@@ -7,11 +7,21 @@ class PlatformerMovement : MonoBehaviour
     [SerializeField] float deceleration = 10;
     [SerializeField] float maxSpeed = 10;
     [SerializeField] float jumpSpeed = 10;
+    [SerializeField, Min(0)] int airJumpCount = 1;
+
+    [SerializeField] Vector2 legPosition = new Vector2(0, -1);
+    [SerializeField] float legRadius = 0.2f;
 
     [SerializeField] new Rigidbody2D rigidbody;
 
-    bool isGrounded = false;
 
+    bool isGrounded = false;
+    int airJumpBudget = 0;
+    float xDirection = 1;
+    public Vector2 GetFacingDirection()
+    {
+        return xDirection * Vector2.right;
+    }
     void OnValidate()
     {
         if (rigidbody == null)
@@ -41,17 +51,36 @@ class PlatformerMovement : MonoBehaviour
 
         // -------------------------------------------------
 
-
         rigidbody.velocity = velocity;
+
+        // --------------------------------------------------
+
+        SetupScale(velocity.x);
     }
 
-    private void Update()
+    void SetupScale(float x)
+    {
+        if (x != 0)
+        {
+            Vector3 scale = transform.localScale;
+            xDirection = Mathf.Sign(x);
+            scale.x = xDirection;
+            transform.localScale = scale;
+        }
+    }
+
+    void Update()
     {
         Vector2 velocity = rigidbody.velocity;
         bool jump = Input.GetKeyDown(KeyCode.Space);
 
-        if (jump && isGrounded)
+        if (jump && (isGrounded || airJumpBudget > 0))
         {
+            if (!isGrounded)
+                airJumpBudget--;
+
+            Debug.Log(airJumpBudget);
+
             velocity.y = jumpSpeed;
         }
         rigidbody.velocity = velocity;
@@ -61,7 +90,15 @@ class PlatformerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        isGrounded = true;
+        Vector2 point = collision.contacts[0].point;
+        Vector3 legWorld = transform.TransformPoint(legPosition);
+        float distance = Vector3.Distance(point, legWorld);
+        if (distance < legRadius)
+        {
+            Debug.Log("Reload: " + airJumpBudget);
+            airJumpBudget = airJumpCount;
+            isGrounded = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -69,4 +106,17 @@ class PlatformerMovement : MonoBehaviour
         isGrounded = false;
     }
 
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.matrix = transform.localToWorldMatrix;
+
+        Vector2 p = legPosition;
+        // Vector3 pWorld = transform.TransformPoint(p);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(p, legRadius);
+
+        Gizmos.matrix = Matrix4x4.identity;
+    }
 }
