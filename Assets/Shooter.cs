@@ -21,7 +21,7 @@ public class Shooter : MonoBehaviour
             GameObject newProjectile = Instantiate(projectilePrototype);
             newProjectile.transform.position = transform.position;
             Rigidbody2D newRB = newProjectile.GetComponent<Rigidbody2D>();
-            newRB.velocity = projectileSpeed * mover.GetFacingDirection();
+            newRB.velocity = projectileSpeed * mover.GetFacingDirection(); // Detect what direction character is facing  - it is a method in other script
         }
     }
 }

@@ -16,8 +16,13 @@ class PlatformerMovement : MonoBehaviour
 
 
     bool isGrounded = false;
-    int airJumpBudget = 0;
-    float xDirection = 1;
+    int airJumpBudget;
+    public float xDirection = 1;
+    private void Start()
+    {
+        airJumpBudget = airJumpCount;
+
+    }
     public Vector2 GetFacingDirection()
     {
         return xDirection * Vector2.right;
@@ -28,34 +33,25 @@ class PlatformerMovement : MonoBehaviour
             rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    void FixedUpdate() // Fixed!!!
     {
-        float x = Input.GetAxis("Horizontal");
+        float x = Input.GetAxis("Horizontal"); // -1, 0 or +1
 
-        Vector2 velocity = rigidbody.velocity;
+        Vector2 velocity = rigidbody.velocity; // actual rigidbody velocity
         if (x == 0) // Deceleration
         {
-            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime); // between velocity.x and 0
         }
         else // Acceleration
         {
             Vector2 accelerationVec = new Vector2(x * acceleration, 0);
-            //velocity.x = x * movementSpeed;
-
             velocity += accelerationVec * Time.fixedDeltaTime;
-            // rigidbody.AddForce(accelerationVec, ForceMode2D.Force);
-
             if (Mathf.Abs(velocity.x) > maxSpeed)
-                velocity.x = maxSpeed * Mathf.Sign(velocity.x);
+                velocity.x = maxSpeed * Mathf.Sign(velocity.x); // Mathf.Sign -1 os +1
         }
+        rigidbody.velocity = velocity; // write back to rigidbody
 
-        // -------------------------------------------------
-
-        rigidbody.velocity = velocity;
-
-        // --------------------------------------------------
-
-        SetupScale(velocity.x);
+        SetupScale(velocity.x); // with scale tun the gun left or right (there ar other solution too)
     }
 
     void SetupScale(float x)
@@ -69,36 +65,30 @@ class PlatformerMovement : MonoBehaviour
         }
     }
 
-    void Update()
+    void Update() // it is why not in FixedUpdate? - Getkeydown
     {
         Vector2 velocity = rigidbody.velocity;
         bool jump = Input.GetKeyDown(KeyCode.Space);
-
         if (jump && (isGrounded || airJumpBudget > 0))
         {
             if (!isGrounded)
                 airJumpBudget--;
-
-            Debug.Log(airJumpBudget);
-
             velocity.y = jumpSpeed;
         }
-        rigidbody.velocity = velocity;
+        rigidbody.velocity = velocity;    
     }
-
-
+    
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 point = collision.contacts[0].point;
         Vector3 legWorld = transform.TransformPoint(legPosition);
-        float distance = Vector3.Distance(point, legWorld);
+        float distance = Vector3.Distance(point, (Vector2)legWorld); // same level - Vector2
         if (distance < legRadius)
         {
-            Debug.Log("Reload: " + airJumpBudget);
             airJumpBudget = airJumpCount;
             isGrounded = true;
-        }
+                    }
     }
 
     private void OnCollisionExit2D(Collision2D collision)

@@ -11,7 +11,7 @@ public class SpaceshipMovement : MonoBehaviour
     [SerializeField] float angularSpeed = 180;
     [SerializeField] float drag = 1;
 
-    Vector2 velocity;
+    Vector2 velocity = Vector2.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +38,12 @@ public class SpaceshipMovement : MonoBehaviour
             {
                 velocity = velocity.normalized * maxSpeed;
             }
+            transform.position = velocity;
         }
-        transform.position += (Vector3)transform.up * Time.fixedDeltaTime;
-        velocity-=velocity * (drag)* Time.fixedDeltaTime;
-            }
+        else
+        {
+            //velocity -= velocity * (drag) * Time.fixedDeltaTime;
+            //transform.position = velocity;
+        }
+    }
 }
