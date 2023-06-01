@@ -28,7 +28,6 @@ public class Damageable : MonoBehaviour
         UpdateUI();
 
         int lost = HealthLost;
-        HealthLost = 12;
 
         Vector3 pos = transform.position;
     }
