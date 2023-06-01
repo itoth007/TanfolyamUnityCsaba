@@ -6,30 +6,86 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
     [SerializeField] int maxHP = 10;
-    [SerializeField] TMP_Text healtText;
+    [SerializeField] TMP_Text healthText;
+    [SerializeField] float invincibilityFrames = 1;
+    [SerializeField] float flickTime = 0.1f;
+
     [SerializeField] Gradient healthColor;
-    [SerializeField] GameObject isDeadObject; // Restart Button
+    [SerializeField] GameObject isDeadObject;
+
     int health;
-    // Start is called before the first frame update
+    bool isInvincible = false;
+
+    public int HealthLost
+    {
+        get => maxHP - health;
+        set => health = maxHP - value;
+    }
+
     void Start()
     {
         health = maxHP;
         UpdateUI();
+
+        int lost = HealthLost;
+        HealthLost = 12;
+
+        Vector3 pos = transform.position;
     }
+
+    public int GetHealth() => health;
+
+    public bool IsAlive => health > 0;
+
     public void Damage(int n)
     {
-        health -=n;
-        health = Mathf.Max(health, 0); // ez csinálja, hogy ne legyen 0-nál kisebb.
+        if (isInvincible)
+            return;
+
+        health -= n;
+        health = Mathf.Max(health, 0);
+
         UpdateUI();
+        StartCoroutine(InvincibilityCoroutine());
     }
-    public int Health => health;
-    public bool IsAlive => health > 0;
-    // Update is called once per frame
+
+    IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+        // yield return new WaitForSeconds(invincibilityFrames);
+
+        float time = 0;
+        bool visible = true;
+        while (time < invincibilityFrames)
+        {
+            visible = !visible;
+
+            EnableAllRenderer(visible);
+            yield return new WaitForSeconds(flickTime);
+            time += flickTime;
+        }
+
+        EnableAllRenderer(true);
+        isInvincible = false;
+    }
+
+    void EnableAllRenderer(bool enabled)
+    {
+        foreach (var renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.enabled = enabled;
+        }
+    }
+
     void UpdateUI()
     {
-        float t = (float) health / maxHP;
+        float t = (float)health / maxHP;
+        // Color c = Color.Lerp(minHPColor, maxHPColor, t);
         Color c = healthColor.Evaluate(t);
-        healtText.text = health.ToString();
+
+        healthText.color = c;
+        healthText.text = health.ToString();
+
         isDeadObject.SetActive(!IsAlive);
     }
 }
