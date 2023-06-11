@@ -39,15 +39,26 @@ public class PlayerMove : MonoBehaviour
         float z = 0;
         if (upButton)
             z += 1;
+        // If camera is not behind you
         //if (downButton)
         //    z -= 1f; // 0.1f; // 0.1 ->Turn in small circle
+
+        // OR
+
+        // If camera is behind you
         if (downButton)
             x += 0.1f; // It is turn // 0.1f; // 0.1 ->Turn in small circle
 
+        // That is better, if camera realy behind you, If horozontalAngle not zero in CameraFollower that is not good solution
         Vector3 cameraRight = cameraTransform.right; // Transform.left is minus right
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 dir = x * cameraRight + z * cameraForward;
+
+        // OR
+
+        //// That gives less good feeling, but it is better if there is horosontalAngle in CameraFollower
+        //Vector3 dir = new Vector3(x,0,z);
         dir.y = 0;
-        return dir;
+        return dir.normalized;
     }
 }

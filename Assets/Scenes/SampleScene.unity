@@ -8165,7 +8165,7 @@ MonoBehaviour:
   target: {fileID: 468282252}
   distance: 10
   verticalAngle: 60
-  horizontalAngle: 90
+  horizontalAngle: 30
 --- !u!1 &996648930
 GameObject:
   m_ObjectHideFlags: 0

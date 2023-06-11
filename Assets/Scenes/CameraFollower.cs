@@ -7,7 +7,7 @@ public class CameraFollower : MonoBehaviour
 
     [SerializeField] Transform target;
     [SerializeField] float distance = 10; // third person camera, first person, if distance almost 0
-    public float verticalAngle = 30;
+    public float verticalAngle = 60;
     public float horizontalAngle = 0;
     // Start is called before the first frame update
     void Start()
@@ -22,35 +22,24 @@ public class CameraFollower : MonoBehaviour
     }
     void FreshCamera()
     {
-        // célponthoz képesti vector
-        // forgást ez biztosítja: target.TransformVector(distanceVector)
-        //transform.position = target.position + target.TransformVector(distanceVector);//hátulról
         float verticalDistance = distance * Mathf.Sin(verticalAngle * Mathf.Deg2Rad);
         float horizontalDistance = distance * Mathf.Cos(verticalAngle * Mathf.Deg2Rad);
 
         float xDistance = horizontalDistance * Mathf.Sin(horizontalAngle * Mathf.Deg2Rad);
         float zDistance = horizontalDistance * Mathf.Cos(horizontalAngle * Mathf.Deg2Rad);
 
+        //Vector3 distanceVector = new Vector3(0, verticalDistance, -horizontalDistance); // It can be plus
+        Vector3 distanceVector = new Vector3(xDistance, verticalDistance, -zDistance);
 
-        //Vector3 distanceVector = new Vector3(0,  verticalDistance, -horizontalDistance);
-        Vector3 distanceVector = new Vector3(xDistance, verticalDistance, zDistance);
-        // itt is lehetne: target.TransformVector(distanceVector)
-        transform.position = target.position + distanceVector; // target.TransformVector(distanceVector);
+        // If camera is not behind you
+        //transform.position = target.position + distanceVector;
 
-        transform.LookAt(target); // hátulról// célponthoz képesti vector
+        //OR
 
-        //// forgást ez biztosítja: target.TransformVector(distanceVector)
-        ////transform.position = target.position + target.TransformVector(distanceVector);//hátulról
-        //float verticalDistance = distance * Mathf.Sin(verticalAngle * Mathf.Deg2Rad);
-        //float horizontalDistance = distance * Mathf.Cos(verticalAngle * Mathf.Deg2Rad);
-        //float xDistance = distance * Mathf.Sin(horizontalAngle * Mathf.Deg2Rad);
-        //float zDistance = distance * Mathf.Cos(horizontalAngle * Mathf.Deg2Rad);
+        // If camera is behind you
+        transform.position = target.position + target.TransformVector(distanceVector);
 
+        transform.LookAt(target); 
 
-        //Vector3 distanceVector = new Vector3(xDistance, verticalDistance, zDistance);
-        //// itt is lehetne: target.TransformVector(distanceVector)
-        //transform.position = transform.position + distanceVector;
-
-        //transform.LookAt(target); // hátulról
-    }
+        }
 }
