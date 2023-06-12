@@ -37,8 +37,6 @@ public class TestComponent : MonoBehaviour
         v3.x = 2;
         Debug.Log(vectorAsASetting.bbb);
 
-
-
         int a = 4;
         int b = a;
         b++;
