@@ -1,9 +1,8 @@
 using UnityEngine;
-
 enum Direction { North, South, East, West }
 
-[System.Serializable]
-struct MyVector2
+[System.Serializable] // ezzel MyVector2 serializálható
+struct MyVector2 // STRUCT - értéktípusú
 {
     public float x, y;
     public string sss;
@@ -17,20 +16,17 @@ struct MyVector2
     }
 }
 
-[System.Serializable]
-class MyVector3
+[System.Serializable] // ezzel MyVector2 serializálható
+class MyVector3 // CLASS - referencia típusu
 {
     public float x, y, z;
 }
-
-
 
 public class TestComponent : MonoBehaviour
 {
     [SerializeField] Direction directionAsASetting;
     [SerializeField] MyVector2 vectorAsASetting;
     [SerializeField] MyVector3 vector3AsASetting;
-
 
     void Start()
     {

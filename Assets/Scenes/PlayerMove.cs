@@ -49,7 +49,7 @@ public class PlayerMove : MonoBehaviour
         if (downButton)
             x += 0.1f; // It is turn // 0.1f; // 0.1 ->Turn in small circle
 
-        // That is better, if camera realy behind you, If horozontalAngle not zero in CameraFollower that is not good solution
+        // That is better, if camera really behind you, If horozontalAngle not zero in CameraFollower that is not good solution
         Vector3 cameraRight = cameraTransform.right; // Transform.left is minus right
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 dir = x * cameraRight + z * cameraForward;
