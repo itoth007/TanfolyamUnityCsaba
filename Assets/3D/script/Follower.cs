@@ -7,7 +7,8 @@ public class Follower : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] Transform target; // Drag and drop, whom follows
-    // Start is called before the first frame update
+    [SerializeField] AnimationCurve speedOverDistance;
+     // Start is called before the first frame update
     void Start()
     {
 
@@ -19,11 +20,14 @@ public class Follower : MonoBehaviour
         Vector3 selfPoint = transform.position; //Enemy - follower
         Vector3 targetPoint = target.position; // Player
 
+        float distance = Vector3.Distance(selfPoint, targetPoint);
+        float speedMultiplier = speedOverDistance.Evaluate(distance);
+        float step = speed * speedMultiplier * Time.deltaTime;
         Vector3 dir = targetPoint - selfPoint;
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(dir); // nem kell normalizálni
-            transform.position = Vector3.MoveTowards(selfPoint, targetPoint, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(selfPoint, targetPoint, step);
         }
     }
 }

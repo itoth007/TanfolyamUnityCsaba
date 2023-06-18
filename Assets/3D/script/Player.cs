@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float angularSpeed = 90;
     [SerializeField] Transform cameraTransform; // 
     [SerializeField] Damageable damageable;
+    [SerializeField] Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
         if (damageable != null && !damageable.IsAlive)
             return;
         Vector3 direction = GetPlayerDirection(); // 4 arrowkeys
+        bool isMoving = direction == Vector3.zero;
+        if (isMoving)
+            animator.SetBool("IsWalking", isMoving);
         if (direction != Vector3.zero)
         {
             Vector3 velocity = direction * speed;
